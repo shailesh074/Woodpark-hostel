@@ -210,6 +210,49 @@ const stories = [
   }
 ];
 
+const aboutMoments = [
+  {
+    label: "01",
+    title: "Arrive without feeling anonymous",
+    copy: "A name remembered at reception. A bag kept safe before check-in. A first recommendation that feels personal, not copied from a list."
+  },
+  {
+    label: "02",
+    title: "Find your people at the pace you choose",
+    copy: "Some guests want the whole table. Some want one good conversation. The house is designed to make both feel natural."
+  },
+  {
+    label: "03",
+    title: "Leave with more than photos",
+    copy: "The best souvenirs are often routes, rituals, borrowed playlists, and people who turn into future travel plans."
+  }
+];
+
+const aboutTimeline = [
+  {
+    time: "Morning",
+    title: "Slow starts",
+    copy: "Coffee in the common room, notebooks open, someone asking where to watch the sea before the day gets warm."
+  },
+  {
+    time: "Afternoon",
+    title: "Independent hours",
+    copy: "Remote work, cafe wandering, Auroville trails, heritage lanes, or the rare pleasure of doing nothing well."
+  },
+  {
+    time: "Evening",
+    title: "The house gathers",
+    copy: "Shared food, rooftop air, plans changing mid-sentence, and the soft electricity of travelers becoming familiar."
+  },
+  {
+    time: "Late",
+    title: "Stories stay awake",
+    copy: "Music lowers, lights warm up, and the day's strangers become the people you look for at breakfast."
+  }
+];
+
+const aboutValues = ["Belonging", "Freedom", "Taste", "Local curiosity", "Soft adventure", "Care without noise"];
+
 function currentRoute() {
   const route = window.location.hash.replace("#/", "").replace("#", "");
   return pageData[route] ? route : "home";
@@ -469,20 +512,108 @@ function StoriesPage() {
 
 function AboutPage() {
   return e(React.Fragment, null,
-    e(PageHero, { data: pageData.about }),
-    e("section", { className: "section" },
-      e("div", { className: "container manifesto" },
-        e("p", { className: "eyebrow" }, "Brand mission"),
-        e("h2", null, "Woodpacker is for travelers who want independence without isolation."),
-        e("p", null, "We create stays where people can arrive as they are: curious, tired, excited, uncertain, solo, in pairs, or with a group. The brand is built on four promises: freedom to explore, care without fuss, social warmth without pressure, and a deeper relationship with Pondicherry."),
-        e("div", { className: "principle-row" },
-          ["Community", "Freedom", "Exploration", "Human connection"].map(word => e("span", { key: word }, word))
+    e("section", { className: "about-hero cinematic-hero" },
+      e("div", { className: "motion-field", "aria-hidden": "true" },
+        e("span"), e("span"), e("span")
+      ),
+      e("div", { className: "about-hero-media parallax-slow" },
+        e("img", { src: bookingImages[0], alt: "Woodpacker hostel facade and arrival moment" })
+      ),
+      e("div", { className: "about-hero-content animate-on-view" },
+        e("p", { className: "eyebrow" }, "About Woodpacker"),
+        e("h1", null, "A house for people who travel to feel more alive."),
+        e("p", { className: "lead" }, "Woodpacker is not built around inventory. It is built around the moment a traveler exhales, looks around, and realizes they have found a place with a pulse."),
+        e("div", { className: "hero-actions" },
+          e("a", { className: "btn btn-primary", href: "#booking" }, "Begin your stay"),
+          e("a", { className: "btn btn-secondary", href: "#/community" }, "Feel the community")
+        )
+      ),
+      e("div", { className: "about-hero-note animate-on-view" },
+        e("strong", null, "Luxury backpacker energy"),
+        e("span", null, "Warm, social, design-aware, and deeply local.")
+      )
+    ),
+    e("section", { className: "about-manifesto section" },
+      e("div", { className: "container manifesto-grid" },
+        e("div", { className: "manifesto-kicker animate-on-view" },
+          e("p", { className: "eyebrow" }, "The manifesto"),
+          e("span", null, "Not a bed for the night. A feeling you carry into the city.")
+        ),
+        e("div", { className: "manifesto-copy animate-on-view" },
+          e("h2", null, "We believe a hostel can be intimate, tasteful, cinematic and human without losing its backpacker soul."),
+          e("p", null, "The new Woodpacker experience is designed around a simple truth: people remember how a place made them feel. Clean rooms matter. So do the first conversation, the perfect local tip, the table that makes space, the quiet corner after a long day, and the night that changes tomorrow's plan."),
+          e("p", null, "This is hospitality with rhythm. Guests can be independent without being isolated, social without being pushed, and curious without being treated like tourists.")
+        )
+      )
+    ),
+    e("section", { className: "image-story section" },
+      e("div", { className: "image-story-grid" },
+        e("figure", { className: "story-image tall parallax-slow animate-on-view" },
+          e("img", { src: bookingImages[1], alt: "Woodpacker common space for community conversations" }),
+          e("figcaption", null, "Common spaces made for accidental friendships")
+        ),
+        e("div", { className: "story-editorial animate-on-view" },
+          e("p", { className: "eyebrow" }, "The emotional product"),
+          e("h2", null, "The room gets them here. The people make them stay."),
+          e("p", null, "Every touchpoint should feel like an invitation: linger here, ask that question, join the walk, skip the plan, take the slower road. Woodpacker becomes the travel companion guests did not know they needed.")
+        ),
+        e("figure", { className: "story-image wide parallax-fast animate-on-view" },
+          e("img", { src: bookingImages[5], alt: "Woodpacker evening gathering atmosphere" }),
+          e("figcaption", null, "Evenings with the easy gravity of a good house")
+        )
+      )
+    ),
+    e("section", { className: "community-moments section" },
+      e("div", { className: "container" },
+        e(SectionIntro, {
+          eyebrow: "Community design",
+          title: "The brand is built around moments, not amenities.",
+          copy: "This is where Woodpacker stops competing as accommodation and starts behaving like a modern travel culture brand."
+        }),
+        e("div", { className: "moment-stack" },
+          aboutMoments.map(moment => e("article", { className: "moment-row animate-on-view", key: moment.title },
+            e("span", null, moment.label),
+            e("h3", null, moment.title),
+            e("p", null, moment.copy)
+          ))
+        )
+      )
+    ),
+    e("section", { className: "about-timeline section" },
+      e("div", { className: "container timeline-shell" },
+        e("div", { className: "timeline-heading animate-on-view" },
+          e("p", { className: "eyebrow" }, "A day in the house"),
+          e("h2", null, "A rhythm that turns a stay into a story.")
+        ),
+        e("div", { className: "timeline-track" },
+          aboutTimeline.map(item => e("article", { className: "timeline-item animate-on-view", key: item.time },
+            e("span", null, item.time),
+            e("h3", null, item.title),
+            e("p", null, item.copy)
+          ))
+        )
+      )
+    ),
+    e("section", { className: "brand-values" },
+      e("div", { className: "values-marquee", "aria-label": "Woodpacker brand values" },
+        e("div", null, aboutValues.concat(aboutValues).map((value, index) => e("span", { key: `${value}-${index}` }, value)))
+      )
+    ),
+    e("section", { className: "founder-note section" },
+      e("div", { className: "container founder-grid" },
+        e("figure", { className: "founder-image animate-on-view" },
+          e("img", { src: bookingImages[6], alt: "Woodpacker quiet morning and reflective travel mood" })
+        ),
+        e("div", { className: "founder-copy animate-on-view" },
+          e("p", { className: "eyebrow" }, "Brand voice"),
+          e("blockquote", null, "Woodpacker is for the traveler who wants the door open, the lights warm, the city close, and the table never too full for one more story."),
+          e("p", null, "The website should feel like that sentence: generous, polished, cinematic, human.")
         )
       )
     ),
     e(CTA, {
-      title: "Make the hostel feel like the beginning of the trip.",
-      copy: "Every page now pushes Woodpacker toward a premium, experience-led identity while preserving its approachable hostel soul."
+      title: "Make Woodpacker the reason people choose Pondicherry differently.",
+      copy: "The About page now establishes the emotional brand platform before the rest of the website expands around community, experiences, workation, rooms and stories."
     })
   );
 }
@@ -621,6 +752,33 @@ function App() {
     document.addEventListener("click", handleBookingClick);
     return () => document.removeEventListener("click", handleBookingClick);
   }, []);
+
+  useEffect(() => {
+    const revealItems = document.querySelectorAll(".animate-on-view");
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add("is-visible");
+      });
+    }, { threshold: 0.18 });
+    revealItems.forEach(item => observer.observe(item));
+
+    const handleMotion = () => {
+      const offset = window.scrollY;
+      document.querySelectorAll(".parallax-slow").forEach(item => {
+        item.style.transform = `translate3d(0, ${offset * -0.025}px, 0)`;
+      });
+      document.querySelectorAll(".parallax-fast").forEach(item => {
+        item.style.transform = `translate3d(0, ${offset * -0.045}px, 0)`;
+      });
+    };
+    handleMotion();
+    window.addEventListener("scroll", handleMotion, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleMotion);
+    };
+  }, [route]);
 
   const pages = {
     home: e(HomePage),
